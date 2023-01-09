@@ -18,7 +18,7 @@ class VisitorController extends Controller
     public function index()
     {
         $visitor = Visitor::all();
-        
+
         return response()->json([
             'visitors' => $visitor,
         ], 232);
@@ -45,9 +45,12 @@ class VisitorController extends Controller
         $TicketUses = Ticket::where("id", $request->get("ticketid"))->value("maxUse");
         $VisitorUses = Visitor::where("ticketid", $request->get("ticketid"))->count();
 
-        if($TicketUses > $VisitorUses){
+        if ($TicketUses > $VisitorUses) {
             $visitor = Visitor::create($request->all());
+
+            $visitorAll = Visitor::all();
             return response()->json([
+                "visitors" => $visitorAll,
                 "data" => $visitor,
                 "ticketUses" => $TicketUses,
                 "visitorUses" => $VisitorUses,
@@ -55,7 +58,7 @@ class VisitorController extends Controller
         }
         return response()->json([
             'message' => "Hát szívás.",
-        ],404);
+        ], 404);
 
     }
 
@@ -91,8 +94,9 @@ class VisitorController extends Controller
     public function update(VisitorRequest $request, Visitor $visitor)
     {
         $visitor->update($request->all());
-
+        $visitorAll = Visitor::all();
         return response()->json([
+            "visitors" => $visitorAll,
             'message' => "Nagyon ügyes vagy - update",
         ], 222);
     }
@@ -106,8 +110,9 @@ class VisitorController extends Controller
     public function destroy(Visitor $visitor)
     {
         $visitor->delete();
-
+        $visitorAll = Visitor::all();
         return response()->json([
+            "visitors" => $visitorAll,
             'message' => "Nagyon ügyes vagy - delete",
         ], 222);
     }

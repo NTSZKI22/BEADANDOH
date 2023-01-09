@@ -18,7 +18,7 @@ class TicketController extends Controller
     public function index()
     {
         $ticket = Ticket::all();
-        
+
         return response()->json([
             'tickets' => $ticket,
         ], 232);
@@ -44,7 +44,9 @@ class TicketController extends Controller
     {
         $ticket = Ticket::create($request->all());
 
+        $ticketAll = Ticket::all();
         return response()->json([
+            'tickets' => $ticketAll,
             'message' => "Nagyon ügyes vagy. - store",
         ], 222);
     }
@@ -81,8 +83,10 @@ class TicketController extends Controller
     public function update(TicketRequest $request, Ticket $ticket)
     {
         $ticket->update($request->all());
+        $ticketAll = Ticket::all();
 
         return response()->json([
+            'tickets' => $ticketAll,
             'message' => "Nagyon ügyes vagy - update",
         ], 222);
     }
@@ -96,8 +100,10 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         $ticket->delete();
+        $ticketAll = Ticket::all();
 
         return response()->json([
+            'tickets' => $ticketAll,
             'message' => "Nagyon ügyes vagy - delete",
         ], 222);
     }
